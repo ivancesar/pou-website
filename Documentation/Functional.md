@@ -12,7 +12,7 @@ The current implementation is a front-end prototype made of standalone HTML page
 - Split major user needs into dedicated pages instead of relying on a long single-page layout.
 - Give visitors fast routes to active programs, HZZ voucher information, contact details, news, and webshop items.
 - Provide a responsive navigation system that works on desktop and mobile.
-- Demonstrate key interactions such as program filtering, menu toggling, active navigation states, and demo form feedback.
+- Demonstrate key interactions such as program filtering, menu toggling, active navigation states, demo form feedback, cart behavior, and restrained micro animations.
 
 ## Target Users
 
@@ -52,12 +52,15 @@ Every main page uses a shared header with:
 
 The navigation script marks the current page as active. When the user is on `blog.html`, the Novosti navigation item is treated as active because blog content belongs to the news/content area.
 
+Selected pages can also include a shared promotional banner directly below the header. The current banner announces a demo 15 EUR discount for new users and appears on the homepage, Programi page, and Webshop page.
+
 ## Homepage Requirements
 
 The homepage must act as a routing and orientation page for the whole website.
 
 Functional content:
 
+- Promotional banner for a demo new-user discount.
 - Hero section introducing education, culture, and community.
 - Primary calls to action:
   - Find a program.
@@ -65,6 +68,7 @@ Functional content:
   - Send an inquiry.
 - Quick action links for active programs, vouchers, workshops, and webshop.
 - Featured information cards for Programi, Vauceri, and Novosti.
+- Testimonials section with three static learner quotes.
 - Newsletter sign-up form.
 - Full footer with address, quick links, social links, and document/privacy link.
 
@@ -114,7 +118,9 @@ Current behavior:
 - Category filtering uses each card's `data-category` values.
 - Status filtering uses each card's `data-status` value.
 - Cards that do not match are hidden.
+- Matching cards replay a short staggered entrance animation after filters are applied.
 - If no cards match the active filters, an empty-state message appears.
+- The empty-state message uses the same restrained filter feedback animation.
 
 ## Vauceri Page Requirements
 
@@ -254,10 +260,10 @@ The JavaScript identifies the current filename from the URL and applies the acti
 
 The JavaScript manages the static webshop cart:
 
-- Add-to-cart buttons update `localStorage` and the shared cart badge.
+- Add-to-cart buttons update `localStorage`, pulse the shared cart badge, and briefly confirm the button action.
 - Cart quantities, removals, totals, delivery visibility, and participant fields are rendered on `kosarica.html`.
 - The checkout form is excluded from the generic demo form handler and uses a custom submit handler.
-- A successful checkout displays a demo-only confirmation message and removes cart data from `localStorage`.
+- A successful checkout displays an animated demo-only confirmation message and removes cart data from `localStorage`.
 
 ### Mobile Navigation
 
@@ -281,6 +287,18 @@ All forms are demo-only:
 - Required fields and email format are validated through browser form validity.
 - Demo status messages are displayed in each form's `.form-message` element.
 - Successful submission resets the form.
+- Demo status messages reveal with a short motion treatment when motion is allowed.
+
+### Micro Animations
+
+The shared CSS and JavaScript provide a restrained motion layer:
+
+- Hover and focus transitions for navigation links, buttons, cards, form controls, FAQ rows, cart rows, product cards, blog cards, news cards, and testimonial cards.
+- Scroll-triggered reveal animations for heroes, sections, headings, repeated cards, forms, cart panels, and newsletter areas.
+- Staggered reveal timing for repeated content, capped to avoid slow or distracting page entry.
+- Program filter animations for matching cards and the empty-results message.
+- Cart badge pulse, add-to-cart confirmation, and form/checkout message reveal effects.
+- No looping decorative animation, parallax, or motion that blocks reading.
 
 ## Accessibility Requirements
 
@@ -293,7 +311,7 @@ Implemented accessibility features include:
 - `aria-expanded` and `aria-controls` on the mobile menu button.
 - Screen-reader-only text for non-visible labels where needed.
 - Native HTML controls for forms, selects, buttons, links, details, and summaries.
-- Reduced-motion media query support in CSS.
+- Reduced-motion media query support in CSS. When reduced motion is requested, reveal targets are shown immediately and hover/filter/cart animations are removed or reduced to near-instant behavior.
 
 ## Responsive Behavior
 
@@ -314,6 +332,7 @@ The design uses:
 - Shared page heroes to make each page feel distinct.
 - Red accent treatment for high-priority sections such as HZZ vouchers and webshop.
 - Card grids for repeated content such as programs, features, products, news, and institutional links.
+- Promotional and testimonial sections that demonstrate reusable content bands for campaign and social-proof content.
 - Placeholder images for hero media, program cards, blog posts, products, and institutional imagery.
 
 Future production work should replace placeholder images and placeholder article body text with approved real content.
@@ -346,15 +365,18 @@ No current backend features:
 - The mobile navigation opens, closes, and updates accessibility state correctly.
 - The active navigation item reflects the current page.
 - Program search, category filtering, and status filtering hide and show cards correctly.
-- Empty program search/filter results display an empty-state message.
+- Program filter changes animate visible result cards without breaking filtering behavior.
+- Empty program search/filter results display an animated empty-state message.
 - Newsletter and contact forms validate required fields and show demo confirmation messages.
 - Webshop product buttons add items to the cart and update the shared cart badge.
+- Add-to-cart interactions provide brief visual feedback on the button and cart badge.
 - Product detail quantity selection adds the requested number of Casopis 15 dana items to the cart.
 - Cart review supports physical product quantity changes, item removal, and persisted state after refresh.
 - Checkout displays delivery fields for physical products and participant fields for program/workshop products.
 - Successful checkout clears the cart and displays a demo confirmation message.
 - Contact page displays general contact details, department list, inquiry form, and location map.
 - Pages remain readable and usable on desktop and mobile screen sizes.
+- Motion respects reduced-motion preferences and does not hide content permanently.
 
 ## Recommended Future Enhancements
 

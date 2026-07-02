@@ -18,6 +18,15 @@ This is not a final production website. It is a learning exercise and example im
 
 - Static HTML pages for the main site sections.
 - Shared styling in `styles.css`.
-- Basic interactive behavior in `script.js`.
+- Basic interactive behavior in `script.js`, including navigation, filtering, forms, cart simulation, and micro animations.
 - POU logo asset in `assets/`.
 - Functional notes in `Documentation/`.
+
+## Current Prototype Features
+
+- Dedicated pages for homepage, programs, vouchers, institution information, news, blog, contact, webshop, product detail, and cart.
+- Shared responsive header with dropdown navigation, language toggle, cart badge, and mobile menu.
+- Program search and filters with animated result feedback.
+- Demo webshop cart and checkout flow using browser `localStorage`.
+- Promotional banner, homepage testimonials, and newsletter/contact demo forms.
+- CSS-first micro animations with reduced-motion support.
