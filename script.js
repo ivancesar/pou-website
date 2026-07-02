@@ -7,6 +7,38 @@ const programCards = document.querySelectorAll("#program-list .program-card");
 const emptyPrograms = document.querySelector("#empty-programs");
 const forms = document.querySelectorAll("form");
 const languageLinks = document.querySelectorAll(".language-toggle .lang-link");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const motionRevealSelector = [
+  ".hero",
+  ".page-hero",
+  ".promo-banner",
+  ".quick-actions",
+  ".section-heading",
+  ".feature-grid article",
+  ".testimonial-card",
+  ".program-card",
+  ".ia-grid article",
+  ".news-list article",
+  ".blog-post",
+  ".blog-sidebar section",
+  ".faq-card",
+  ".split-copy",
+  ".split-image",
+  ".stats div",
+  ".product-card",
+  ".shop-group-heading",
+  ".product-gallery",
+  ".product-detail-copy",
+  ".cart-panel",
+  ".cart-item",
+  ".order-summary",
+  ".checkout-form",
+  ".checkout-confirmation",
+  ".participant-card",
+  ".contact-grid article",
+  ".contact-form",
+  ".newsletter-section",
+].join(",");
 
 const CART_STORAGE_KEY = "pouzCartV1";
 const DELIVERY_PRICE = 4;
@@ -51,6 +83,143 @@ const products = {
     extra: "voucher",
   },
 };
+
+let revealObserver = null;
+
+function isReducedMotion() {
+  return reducedMotionQuery.matches;
+}
+
+function showRevealElement(element) {
+  element.classList.add("is-visible");
+}
+
+function prepareRevealElement(element, index = 0) {
+  if (!element || element.classList.contains("motion-reveal-ready")) {
+    return;
+  }
+
+  const delay = Math.min((index % 6) * 45, 225);
+  element.classList.add("motion-reveal", "motion-reveal-ready");
+  element.style.setProperty("--motion-delay", `${delay}ms`);
+
+  if (isReducedMotion()) {
+    showRevealElement(element);
+    return;
+  }
+
+  if (element.matches(".hero, .page-hero")) {
+    window.requestAnimationFrame(() => showRevealElement(element));
+    return;
+  }
+
+  if (revealObserver) {
+    revealObserver.observe(element);
+  } else {
+    showRevealElement(element);
+  }
+}
+
+function observeMotionElements(root = document) {
+  const targets = Array.from(root.querySelectorAll(motionRevealSelector));
+
+  targets.forEach((element, index) => {
+    prepareRevealElement(element, index);
+  });
+}
+
+function setupScrollReveals() {
+  document.documentElement.classList.add("motion-ready");
+
+  if (!("IntersectionObserver" in window) || isReducedMotion()) {
+    observeMotionElements();
+    return;
+  }
+
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        showRevealElement(entry.target);
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    {
+      rootMargin: "0px 0px -10% 0px",
+      threshold: 0.12,
+    }
+  );
+
+  observeMotionElements();
+}
+
+function pulseCartCount() {
+  if (isReducedMotion()) {
+    return;
+  }
+
+  document.querySelectorAll("[data-cart-count]").forEach((badge) => {
+    badge.classList.remove("is-pulsing");
+    void badge.offsetWidth;
+    badge.classList.add("is-pulsing");
+  });
+}
+
+function confirmButtonAction(button) {
+  if (!button || isReducedMotion()) {
+    return;
+  }
+
+  button.classList.remove("is-confirming");
+  void button.offsetWidth;
+  button.classList.add("is-confirming");
+  window.setTimeout(() => {
+    button.classList.remove("is-confirming");
+  }, 700);
+}
+
+function revealMessage(element) {
+  if (!element || isReducedMotion()) {
+    return;
+  }
+
+  if (element.classList.contains("motion-reveal")) {
+    showRevealElement(element);
+  }
+
+  element.classList.remove("is-revealing");
+  void element.offsetWidth;
+  element.classList.add("is-revealing");
+  window.setTimeout(() => {
+    element.classList.remove("is-revealing");
+  }, 620);
+}
+
+function animateProgramFilterResults(visibleCards) {
+  if (isReducedMotion()) {
+    return;
+  }
+
+  programCards.forEach((card) => {
+    card.classList.remove("is-filter-entering");
+    card.style.removeProperty("--filter-delay");
+  });
+
+  visibleCards.forEach((card, index) => {
+    card.style.setProperty("--filter-delay", `${Math.min(index * 55, 220)}ms`);
+    void card.offsetWidth;
+    card.classList.add("is-filter-entering");
+  });
+
+  if (emptyPrograms && !emptyPrograms.hidden) {
+    emptyPrograms.classList.remove("is-filter-entering");
+    void emptyPrograms.offsetWidth;
+    emptyPrograms.classList.add("is-filter-entering");
+  }
+}
 
 function markCurrentNavigation() {
   const currentFile = window.location.pathname.split("/").pop() || "index.html";
@@ -131,6 +300,7 @@ function filterPrograms() {
   const category = categoryFilter.value;
   const status = statusFilter.value;
   let visibleCount = 0;
+  const visibleCards = [];
 
   programCards.forEach((card) => {
     const text = card.textContent.toLowerCase();
@@ -144,12 +314,18 @@ function filterPrograms() {
     card.hidden = !isVisible;
     if (isVisible) {
       visibleCount += 1;
+      visibleCards.push(card);
     }
   });
 
   if (emptyPrograms) {
     emptyPrograms.hidden = visibleCount !== 0;
+    if (emptyPrograms.hidden) {
+      emptyPrograms.classList.remove("is-filter-entering");
+    }
   }
+
+  animateProgramFilterResults(visibleCards);
 }
 
 if (programSearch && categoryFilter && statusFilter && programCards.length) {
@@ -211,6 +387,7 @@ function addToCart(productId, quantity = 1) {
   }
 
   writeCart(cart);
+  pulseCartCount();
 }
 
 function setCartQuantity(productId, quantity) {
@@ -456,6 +633,12 @@ function renderCartPage() {
   renderParticipantFields(cart);
   updateCheckoutVisibility(cart);
   updateSummary(cart);
+  observeMotionElements(cartItems);
+
+  const participantFields = document.querySelector("#participant-fields");
+  if (participantFields) {
+    observeMotionElements(participantFields);
+  }
 }
 
 document.querySelectorAll("[data-add-to-cart]").forEach((button) => {
@@ -467,6 +650,7 @@ document.querySelectorAll("[data-add-to-cart]").forEach((button) => {
 
   button.addEventListener("click", () => {
     addToCart(button.dataset.addToCart);
+    confirmButtonAction(button);
     button.textContent = "Dodano";
     window.setTimeout(() => {
       button.textContent = "Dodaj u ko\u0161aricu";
@@ -483,10 +667,12 @@ if (detailForm) {
     const message = detailForm.querySelector(".form-message");
 
     addToCart(button.dataset.addToCart, quantityInput.value);
+    confirmButtonAction(button);
 
     if (message) {
       message.textContent = "Proizvod je dodan u ko\u0161aricu.";
       message.classList.remove("is-error");
+      revealMessage(message);
     }
   });
 }
@@ -527,6 +713,7 @@ if (checkoutForm) {
       if (message) {
         message.textContent = "Kosarica je prazna. Dodajte proizvod prije checkouta.";
         message.classList.add("is-error");
+        revealMessage(message);
       }
       return;
     }
@@ -538,6 +725,7 @@ if (checkoutForm) {
       if (message) {
         message.textContent = "Provjerite obavezna polja i pokusajte ponovno.";
         message.classList.add("is-error");
+        revealMessage(message);
       }
       return;
     }
@@ -556,6 +744,8 @@ if (checkoutForm) {
     if (confirmation) {
       confirmation.hidden = false;
       confirmation.textContent = `Demo narudzba ${confirmationNumber} je prikazana kao zaprimljena. Placanje nije provedeno i narudzba nije poslana.`;
+      observeMotionElements(confirmation.parentElement || document);
+      revealMessage(confirmation);
     }
   });
 }
@@ -576,14 +766,25 @@ forms.forEach((form) => {
     if (!form.checkValidity()) {
       message.textContent = "Provjerite obavezna polja i pokusajte ponovno.";
       message.classList.add("is-error");
+      revealMessage(message);
       return;
     }
 
     form.reset();
     message.textContent = "Hvala. Vasa poruka je zaprimljena u ovoj demo verziji.";
     message.classList.remove("is-error");
+    revealMessage(message);
   });
 });
 
+if (typeof reducedMotionQuery.addEventListener === "function") {
+  reducedMotionQuery.addEventListener("change", () => {
+    if (isReducedMotion()) {
+      document.querySelectorAll(".motion-reveal").forEach(showRevealElement);
+    }
+  });
+}
+
+setupScrollReveals();
 updateCartCount();
 renderCartPage();
