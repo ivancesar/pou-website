@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Webshop POUZ-a s publikacijama, ud&#382;benicima, casopisom 15 dana i kalendarima." />
+    <meta
+      name="description"
+      content="Webshop POUZ-a s publikacijama, casopisom, kalendarima, radionicama i osposobljavanjima."
+    />
     <title>Webshop - POUZ</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -76,15 +79,19 @@
             <a class="nav-link nav-cta" href="webshop.html">Webshop</a>
             <ul class="submenu">
               <li><a href="webshop.html#proizvodi">Svi proizvodi</a></li>
-              <li><a href="webshop.html#casopis">Casopis 15 dana</a></li>
-              <li><a href="webshop.html#majstori">Biblioteka Majstori</a></li>
-              <li><a href="webshop.html#kalendari">Kalendari</a></li>
+              <li><a href="webshop.html#publikacije">Publikacije</a></li>
+              <li><a href="webshop.html#programi-kupnja">Programi i radionice</a></li>
+              <li><a href="kosarica.html">Ko&#353;arica</a></li>
             </ul>
           </li>
         </ul>
       </nav>
 
       <div class="header-actions">
+        <a class="cart-link" href="kosarica.html" aria-label="Ko&#353;arica">
+          <span>Ko&#353;arica</span>
+          <strong class="cart-count" data-cart-count>0</strong>
+        </a>
         <nav class="language-toggle" aria-label="Odabir jezika">
           <a class="lang-link is-active" href="#" hreflang="hr" aria-current="true">HR</a>
           <a class="lang-link" href="#" hreflang="en">EN</a>
@@ -101,52 +108,119 @@
     <main id="main-content">
       <section class="page-hero red-hero">
         <p class="eyebrow">Webshop</p>
-        <h1>Publikacije, udzbenici i materijali za online kupnju</h1>
-        <p>Webshop je izdvojen u zasebnu kupovnu stranicu s proizvodima, cijenama i dostupnosti.</p>
+        <h1>Publikacije, radionice i programi za demo online kupnju</h1>
+        <p>
+          Odaberite proizvod, dodajte ga u ko&#353;aricu i pro&#273;ite kroz simulirani checkout.
+          Narud&#382;ba se ne napla&#263;uje i ne &#353;alje.
+        </p>
       </section>
 
       <section id="proizvodi" class="section webshop-section">
-        <div class="product-grid">
-          <article id="casopis" class="product-card">
-            <img src="https://placehold.co/520x440/f4f4f4/777777?text=15+dana" alt="" />
-            <div>
-              <span class="tag">&#268;asopis 15 dana</span>
-              <h3>&#268;asopis 15 dana - novo izdanje</h3>
-              <p>Dostupno za online pla&#263;anje, dostavu i osobno preuzimanje.</p>
-              <strong>12,00 EUR</strong>
-              <a href="kontakt.html" class="button small">Upit za kupnju</a>
-            </div>
-          </article>
-          <article id="majstori" class="product-card">
-            <img src="https://placehold.co/520x440/f4f4f4/777777?text=Majstori" alt="" />
-            <div>
-              <span class="tag">Biblioteka Majstori</span>
-              <h3>Publikacija iz biblioteke Majstori</h3>
-              <p>Galerija fotografija, opis, dostupnost i povezani proizvodi.</p>
-              <strong>18,00 EUR</strong>
-              <a href="kontakt.html" class="button small">Upit za kupnju</a>
-            </div>
-          </article>
-          <article id="kalendari" class="product-card">
-            <img src="https://placehold.co/520x440/f4f4f4/777777?text=Kalendar" alt="" />
-            <div>
-              <span class="tag">Kalendari</span>
-              <h3>Kalendar POUZ</h3>
-              <p>Primjer proizvoda s dostavom i osobnim preuzimanjem.</p>
-              <strong>9,00 EUR</strong>
-              <a href="kontakt.html" class="button small">Upit za kupnju</a>
-            </div>
-          </article>
+        <div class="section-heading align-left">
+          <p class="eyebrow">Kupnja</p>
+          <h2>Jednostavni proizvodi i programi u istoj ko&#353;arici</h2>
+          <p>
+            Fizi&#269;ki proizvodi koriste koli&#269;inu, dostavu ili preuzimanje. Programi i radionice
+            u checkoutu tra&#382;e dodatne podatke o polazniku.
+          </p>
+        </div>
+
+        <div id="publikacije" class="shop-group">
+          <div class="shop-group-heading">
+            <h2>Publikacije i materijali</h2>
+            <p>Jednostavni fizi&#269;ki proizvodi s demo dostavom ili osobnim preuzimanjem.</p>
+          </div>
+          <div class="product-grid">
+            <article id="casopis" class="product-card shop-card">
+              <img src="https://placehold.co/640x520/f4f4f4/777777?text=15+dana" alt="" />
+              <div>
+                <span class="tag">&#268;asopis 15 dana</span>
+                <h3>&#268;asopis 15 dana</h3>
+                <p>Novo izdanje kulturnog &#269;asopisa za narud&#382;bu, dostavu ili preuzimanje.</p>
+                <strong>12,00 EUR</strong>
+                <div class="product-actions">
+                  <a href="proizvod.html" class="button small secondary-action">Detalji</a>
+                  <button class="button small" type="button" data-add-to-cart="casopis-15-dana">Dodaj u ko&#353;aricu</button>
+                </div>
+              </div>
+            </article>
+            <article id="majstori" class="product-card shop-card">
+              <img src="https://placehold.co/640x520/f4f4f4/777777?text=Majstori" alt="" />
+              <div>
+                <span class="tag">Biblioteka Majstori</span>
+                <h3>Biblioteka Majstori</h3>
+                <p>Publikacija iz nakladni&#269;ke biblioteke s fotografijama i tekstovima.</p>
+                <strong>18,00 EUR</strong>
+                <div class="product-actions">
+                  <button class="button small" type="button" data-add-to-cart="biblioteka-majstori">Dodaj u ko&#353;aricu</button>
+                </div>
+              </div>
+            </article>
+            <article id="kalendari" class="product-card shop-card">
+              <img src="https://placehold.co/640x520/f4f4f4/777777?text=Kalendar" alt="" />
+              <div>
+                <span class="tag">Kalendar</span>
+                <h3>Kalendar POUZ</h3>
+                <p>Godi&#353;nji kalendar s motivima programa, radionica i kulturnih aktivnosti.</p>
+                <strong>9,00 EUR</strong>
+                <div class="product-actions">
+                  <button class="button small" type="button" data-add-to-cart="kalendar-pouz">Dodaj u ko&#353;aricu</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="programi-kupnja" class="shop-group">
+          <div class="shop-group-heading">
+            <h2>Programi i radionice</h2>
+            <p>Kompleksniji proizvodi koji u checkoutu tra&#382;e podatke o polazniku.</p>
+          </div>
+          <div class="product-grid">
+            <article class="product-card shop-card">
+              <img src="https://placehold.co/640x520/f4f4f4/777777?text=Engleski" alt="" />
+              <div>
+                <span class="tag">Online program</span>
+                <h3>Engleski jezik (online)</h3>
+                <p>Demo prijava i kupnja online programa s odabirom trenutne razine znanja.</p>
+                <strong>120,00 EUR</strong>
+                <div class="product-actions">
+                  <button class="button small" type="button" data-add-to-cart="engleski-online">Dodaj u ko&#353;aricu</button>
+                </div>
+              </div>
+            </article>
+            <article class="product-card shop-card">
+              <img src="https://placehold.co/640x520/f4f4f4/777777?text=Keramika" alt="" />
+              <div>
+                <span class="tag">Radionica</span>
+                <h3>Kerami&#269;ka radionica</h3>
+                <p>Kreativna radionica s prijavom polaznika i napomenom o iskustvu.</p>
+                <strong>65,00 EUR</strong>
+                <div class="product-actions">
+                  <button class="button small" type="button" data-add-to-cart="keramicka-radionica">Dodaj u ko&#353;aricu</button>
+                </div>
+              </div>
+            </article>
+            <article class="product-card shop-card">
+              <img src="https://placehold.co/640x520/f4f4f4/777777?text=Vodoinstalater" alt="" />
+              <div>
+                <span class="tag">Osposobljavanje</span>
+                <h3>Vodoinstalatersko osposobljavanje</h3>
+                <p>Program osposobljavanja s dodatnim informacijama za prijavu i vau&#269;er.</p>
+                <strong>490,00 EUR</strong>
+                <div class="product-actions">
+                  <button class="button small" type="button" data-add-to-cart="vodoinstalatersko-osposobljavanje">Dodaj u ko&#353;aricu</button>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
     </main>
     <footer class="site-footer compact-footer">
       <span>&copy; 2026 POUZ</span>
-      <a href="kontakt.html">Kontakt</a>
+      <a href="kosarica.html">Ko&#353;arica</a>
     </footer>
     <script src="script.js"></script>
   </body>
 </html>
-
-
-

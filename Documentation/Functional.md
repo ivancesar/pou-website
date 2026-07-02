@@ -34,7 +34,9 @@ The website contains the following pages:
 - `novosti.html`: news listing with dated updates and categories.
 - `blog.html`: editorial article listing with sidebar categories and archive links.
 - `kontakt.html`: contact details, department overview, inquiry form, and embedded map.
-- `webshop.html`: product listing for publications and materials.
+- `webshop.html`: simulated webshop listing for publications, materials, programs, and workshops.
+- `proizvod.html`: one-product detail page for Casopis 15 dana.
+- `kosarica.html`: simulated cart review and checkout page.
 
 ## Global Layout And Navigation
 
@@ -206,32 +208,56 @@ Current behavior:
 
 ## Webshop Page Requirements
 
-The Webshop page must present products and direct users toward purchase inquiries.
+The Webshop area must simulate a functional purchase flow while remaining a static front-end prototype.
 
 Functional content:
 
-- Dedicated red hero section.
-- Product cards with image, category tag, title, description, price, and purchase inquiry link.
-- Product anchors for:
-  - Casopis 15 dana.
-  - Biblioteka Majstori.
-  - Kalendari.
+- Dedicated red hero section on `webshop.html`.
+- Product groups for physical products and programs/workshops.
+- Product cards with image, category tag, title, description, price, and add-to-cart button.
+- One detailed product page, `proizvod.html`, for Casopis 15 dana.
+- Shared cart badge in the header on all pages.
+- `kosarica.html` for cart review, quantity changes, item removal, checkout fields, totals, and demo confirmation.
 
-Current products:
+Current physical products:
 
-- Casopis 15 dana - novo izdanje, 12.00 EUR.
-- Publikacija iz biblioteke Majstori, 18.00 EUR.
+- Casopis 15 dana, 12.00 EUR.
+- Biblioteka Majstori, 18.00 EUR.
 - Kalendar POUZ, 9.00 EUR.
+
+Current program/workshop products:
+
+- Engleski jezik (online), 120.00 EUR.
+- Keramicka radionica, 65.00 EUR.
+- Vodoinstalatersko osposobljavanje, 490.00 EUR.
+
+Current cart and checkout behavior:
+
+- Cart state is stored in browser `localStorage` under `pouzCartV1`.
+- Physical products support quantity changes and checkout fulfillment by pickup or delivery.
+- Delivery address fields appear only when delivery is selected for physical products.
+- Program/workshop products are fixed to one participant per cart line.
+- Program/workshop checkout shows participant fields and product-specific optional fields.
+- Checkout validates required fields, clears the cart on success, and displays a demo confirmation number.
 
 Current limitation:
 
-- The webshop is a catalog/inquiry prototype. It does not include a cart, checkout, stock management, payment, delivery selection, or order confirmation.
+- The webshop is a clickable simulation. It does not include real payment, backend order submission, stock management, shipping integration, tax calculation, accounts, or email notifications.
 
 ## Shared Interactions
 
 ### Active Navigation
 
-The JavaScript identifies the current filename from the URL and applies the active state to the matching primary navigation item. `blog.html` maps to the Novosti navigation item.
+The JavaScript identifies the current filename from the URL and applies the active state to the matching primary navigation item. `blog.html` maps to the Novosti navigation item. `proizvod.html` and `kosarica.html` map to the Webshop navigation item.
+
+### Cart Simulation
+
+The JavaScript manages the static webshop cart:
+
+- Add-to-cart buttons update `localStorage` and the shared cart badge.
+- Cart quantities, removals, totals, delivery visibility, and participant fields are rendered on `kosarica.html`.
+- The checkout form is excluded from the generic demo form handler and uses a custom submit handler.
+- A successful checkout displays a demo-only confirmation message and removes cart data from `localStorage`.
 
 ### Mobile Navigation
 
@@ -322,7 +348,11 @@ No current backend features:
 - Program search, category filtering, and status filtering hide and show cards correctly.
 - Empty program search/filter results display an empty-state message.
 - Newsletter and contact forms validate required fields and show demo confirmation messages.
-- Webshop product inquiry buttons route users to the contact page.
+- Webshop product buttons add items to the cart and update the shared cart badge.
+- Product detail quantity selection adds the requested number of Casopis 15 dana items to the cart.
+- Cart review supports physical product quantity changes, item removal, and persisted state after refresh.
+- Checkout displays delivery fields for physical products and participant fields for program/workshop products.
+- Successful checkout clears the cart and displays a demo confirmation message.
 - Contact page displays general contact details, department list, inquiry form, and location map.
 - Pages remain readable and usable on desktop and mobile screen sizes.
 
