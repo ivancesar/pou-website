@@ -1218,12 +1218,29 @@ details[open] summary {
 
 .blog-sidebar {
   display: grid;
+  align-self: start;
   align-content: start;
   gap: 20px;
 }
 
 .blog-sidebar section {
   padding: 24px;
+}
+
+.blog-sidebar .filters {
+  grid-template-columns: 1fr;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+}
+
+.blog-layout > .empty-state {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }
 
 .blog-sidebar h2 {
@@ -1731,7 +1748,7 @@ details[open] summary {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.2fr repeat(3, 1fr);
+  grid-template-columns: 1.3fr repeat(2, 1fr);
   gap: 34px;
   max-width: var(--container);
   margin: 0 auto;
@@ -1757,6 +1774,11 @@ details[open] summary {
 
 .site-footer li + li {
   margin-top: 8px;
+}
+
+.footer-document-link {
+  margin-top: 16px;
+  font-weight: 800;
 }
 
 .footer-bottom {
