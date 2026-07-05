@@ -22,8 +22,6 @@ The prototype does not include a backend, CMS, checkout, authentication, persist
 - `webshop.html`: existing webshop/catalog page.
 - `kontakt.html`: secondary contact page linked from CTAs and footers.
 
-Legacy pages `programi.html`, `o-ucilistu.html`, `novosti.html`, and `blog.html` are kept as bridge pages to the new structure.
-
 ## Global Navigation
 
 The primary navigation contains:
