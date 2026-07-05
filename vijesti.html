@@ -55,14 +55,27 @@
   </div>
 </header>
     <main id="main-content">
-<section class="page-hero"><h1>Aktualnosti i arhiva objava</h1><p>Pretra&#382;ite sve objave po naslovu, sa&#382;etku ili kategoriji.</p></section>
-      <section class="section">
-        <div class="archive-layout">
-          <div class="filters two-controls" aria-label="Filtri vijesti">
-            <label><span>Pretra&#382;ivanje</span><input id="news-search" type="search" placeholder="Pretra&#382;i vijesti" /></label>
-            <label><span>Kategorija</span><select id="news-category"><option value="sve">Sve kategorije</option><option value="obrazovanje-osnovna-skola">Osnovna &#353;kola za odrasle</option><option value="obrazovanje-srednja-skola">Srednja &#353;kola</option><option value="obrazovanje-osposobljavanje">Osposobljavanje</option><option value="obrazovanje-usavrsavanje">Usavr&#353;avanje</option><option value="nakladnistvo">Nakladni&#353;tvo</option><option value="galerija-cekao">Galerija Cekao</option><option value="galerija-bernardo-bernardi">Galerija Bernardo Bernardi</option><option value="kreativne-radionice">Kreativne radionice</option><option value="koncerti">Koncerti</option><option value="erasmus">Erasmus+</option><option value="projekti">Projekti</option><option value="vauceri">Vau&#269;eri</option></select></label>
-          </div>
-          <div id="all-news-list" class="news-list" data-dynamic-status="U&#269;itavanje vijesti..."></div>
+      <section class="page-hero"><h1>Aktualnosti i arhiva objava</h1><p>Pretra&#382;ite sve objave po naslovu, sa&#382;etku ili kategoriji.</p></section>
+      <section class="section blog-section">
+        <div class="blog-layout">
+          <div class="blog-list" id="all-news-list" data-news-style="blog" data-dynamic-status="U&#269;itavanje vijesti..."></div>
+          <aside class="blog-sidebar" aria-label="Filtri vijesti">
+            <section>
+              <h2>Pretra&#382;ivanje</h2>
+              <div class="filters news-archive-filters">
+                <label><span>Pojam</span><input id="news-search" type="search" placeholder="Pretra&#382;i vijesti" /></label>
+                <label><span>Kategorija</span><select id="news-category"><option value="sve">Sve kategorije</option><option value="obrazovanje-osnovna-skola">Osnovna &#353;kola za odrasle</option><option value="obrazovanje-srednja-skola">Srednja &#353;kola</option><option value="obrazovanje-osposobljavanje">Osposobljavanje</option><option value="obrazovanje-usavrsavanje">Usavr&#353;avanje</option><option value="nakladnistvo">Nakladni&#353;tvo</option><option value="galerija-cekao">Galerija Cekao</option><option value="galerija-bernardo-bernardi">Galerija Bernardo Bernardi</option><option value="kreativne-radionice">Kreativne radionice</option><option value="koncerti">Koncerti</option><option value="erasmus">Erasmus+</option><option value="projekti">Projekti</option><option value="vauceri">Vau&#269;eri</option></select></label>
+              </div>
+            </section>
+            <section>
+              <h2>Arhiva</h2>
+              <ul>
+                <li><a href="vijesti.html">Sve objave</a></li>
+                <li><a href="dokumenti.html">Dokumenti</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+              </ul>
+            </section>
+          </aside>
           <p class="empty-state" id="empty-news" hidden>Nema vijesti za odabrane filtre.</p>
         </div>
       </section>
@@ -74,6 +87,7 @@
         <span class="brand-logo footer-logo"><img src="assets/pou-logo.svg" alt="POUZ" /></span>
       </a>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere hendrerit neque.</p>
+      <p class="footer-document-link"><a href="dokumenti.html">Dokumenti</a></p>
     </div>
     <div>
       <h2>Kontakt</h2>
@@ -89,14 +103,12 @@
       <ul>
         <li><a href="obrazovanje.html">Obrazovanje</a></li>
         <li><a href="vijesti.html">Vijesti</a></li>
-        <li><a href="dokumenti.html">Dokumenti</a></li>
         <li><a href="webshop.html">Webshop</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 POUZ</span>
-    <a href="dokumenti.html">Dokumenti i politika privatnosti</a>
   </div>
 </footer>
     <script src="assets/site-data.js"></script>

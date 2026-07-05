@@ -244,14 +244,10 @@ function currentNavKey(fileName) {
     "projekti.html": "projekti",
     "vauceri.html": "vauceri",
     "vijesti.html": "vijesti",
-    "novosti.html": "vijesti",
-    "blog.html": "vijesti",
     "dokumenti.html": "dokumenti",
     "webshop.html": "webshop",
     "kosarica.html": "webshop",
     "proizvod.html": "webshop",
-    "programi.html": "obrazovanje",
-    "o-ucilistu.html": "dokumenti",
   };
 
   return map[fileName] || "";
