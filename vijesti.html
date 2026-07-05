@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Pu&#269;ko otvoreno u&#269;ili&#353;te Zagreb - obrazovanje, kultura, projekti, vau&#269;eri, dokumenti i webshop."
-    />
-    <title>POUZ - Pu&#269;ko otvoreno u&#269;ili&#353;te Zagreb</title>
+    <meta name="description" content="Vijesti POUZ-a." />
+    <title>Vijesti - POUZ</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -53,76 +50,17 @@
         </nav>
       </div>
     </header>
-
     <main id="main-content">
-      <section class="hero home-hero">
-        <div class="hero-media">
-          <img src="https://placehold.co/1800x1000/d11f14/ffffff?text=POUZ" alt="" />
+<section class="page-hero"><h1>Aktualnosti i arhiva objava</h1><p>Pretra&#382;ite sve objave po naslovu, sa&#382;etku ili kategoriji.</p></section>
+      <section class="section">
+        <div class="archive-layout">
+          <div class="filters two-controls" aria-label="Filtri vijesti">
+            <label><span>Pretra&#382;ivanje</span><input id="news-search" type="search" placeholder="Pretra&#382;i vijesti" /></label>
+            <label><span>Kategorija</span><select id="news-category"><option value="sve">Sve kategorije</option><option value="obrazovanje-osnovna-skola">Osnovna &#353;kola za odrasle</option><option value="obrazovanje-srednja-skola">Srednja &#353;kola</option><option value="obrazovanje-osposobljavanje">Osposobljavanje</option><option value="obrazovanje-usavrsavanje">Usavr&#353;avanje</option><option value="nakladnistvo">Nakladni&#353;tvo</option><option value="galerija-cekao">Galerija Cekao</option><option value="galerija-bernardo-bernardi">Galerija Bernardo Bernardi</option><option value="kreativne-radionice">Kreativne radionice</option><option value="koncerti">Koncerti</option><option value="erasmus">Erasmus+</option><option value="projekti">Projekti</option><option value="vauceri">Vau&#269;eri</option></select></label>
+          </div>
+          <div id="all-news-list" class="news-list" data-dynamic-status="U&#269;itavanje vijesti..."></div>
+          <p class="empty-state" id="empty-news" hidden>Nema vijesti za odabrane filtre.</p>
         </div>
-        <div class="hero-content">
-          <h1>Pu&#269;ko otvoreno u&#269;ili&#353;te Zagreb</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-            hendrerit neque, vitae efficitur lectus gravida non.
-          </p>
-        </div>
-      </section>
-
-      <section id="najnovije" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Najnovije</p>
-          <h2>Aktualnosti iz svih podru&#269;ja</h2>
-          <p>Pet najnovijih objava prikazuje se neovisno o kategoriji.</p>
-        </div>
-        <div
-          class="news-list"
-          data-news-latest
-          data-news-limit="5"
-          data-dynamic-status="U&#269;itavanje vijesti..."
-        ></div>
-      </section>
-
-      <section id="iskustva" class="section band">
-        <div class="section-heading">
-          <h2>&#352;to ka&#382;u polaznici i suradnici</h2>
-        </div>
-        <div class="testimonial-grid">
-          <figure class="testimonial-card">
-            <blockquote>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel sapien sed
-              ipsum viverra tristique.
-            </blockquote>
-            <figcaption>Polaznica obrazovanja</figcaption>
-          </figure>
-          <figure class="testimonial-card">
-            <blockquote>
-              Curabitur luctus, sapien nec eleifend tempor, sem dolor pulvinar erat, sed
-              viverra justo neque vel neque.
-            </blockquote>
-            <figcaption>Suradnik u kulturi</figcaption>
-          </figure>
-          <figure class="testimonial-card">
-            <blockquote>
-              Aenean pretium augue nec tortor bibendum, ac mattis risus porta. Donec tempor
-              ligula id mauris pharetra.
-            </blockquote>
-            <figcaption>Projektni partner</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section id="e-novosti" class="newsletter-section">
-        <div>
-          <h2>Primajte obavijesti o upisima, radionicama i novostima</h2>
-        </div>
-        <form class="newsletter-form" novalidate>
-          <label>
-            <span class="sr-only">Adresa e-po&#353;te</span>
-            <input type="email" placeholder="Upi&#353;ite adresu e-po&#353;te" required />
-          </label>
-          <button class="button light" type="submit">Prijavi se</button>
-          <p class="form-message" role="status"></p>
-        </form>
       </section>
     </main>
     <footer class="site-footer">
@@ -157,7 +95,6 @@
         <a href="dokumenti.html">Dokumenti i politika privatnosti</a>
       </div>
     </footer>
-
     <script src="assets/site-data.js"></script>
     <script src="script.js"></script>
   </body>

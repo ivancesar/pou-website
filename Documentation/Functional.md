@@ -2,337 +2,69 @@
 
 ## Project Overview
 
-The website is a redesigned static public website for POUZ, Pucko otvoreno uciliste Zagreb. Its purpose is to help visitors quickly understand the institution, discover available education and cultural programs, learn about HZZ vouchers, follow news and blog content, contact the organization, and browse webshop items.
+The website is a static public prototype for POUZ, Pu&#269;ko otvoreno u&#269;ili&#353;te Zagreb. It presents education, culture, projects, vouchers, news, documents, and webshop content through standalone HTML pages, shared CSS, shared JavaScript, and a small JSON data source.
 
-The current implementation is a front-end prototype made of standalone HTML pages, a shared stylesheet, a shared JavaScript file, and a logo asset. It does not include a backend, CMS, payment processing, user accounts, or persistent form submission.
-
-## Primary Goals
-
-- Present POUZ as a clear, approachable institution focused on lifelong learning, culture, publishing, and projects.
-- Split major user needs into dedicated pages instead of relying on a long single-page layout.
-- Give visitors fast routes to active programs, HZZ voucher information, contact details, news, and webshop items.
-- Provide a responsive navigation system that works on desktop and mobile.
-- Demonstrate key interactions such as program filtering, menu toggling, active navigation states, and demo form feedback.
-
-## Target Users
-
-- Prospective adult learners looking for education or training programs.
-- Visitors interested in creative workshops, culture, publishing, or programs for the third age.
-- Users researching HZZ voucher eligibility and application steps.
-- Existing participants looking for updates, dates, and institutional information.
-- Buyers interested in POUZ publications, the magazine "15 dana", calendars, or related materials.
-- Partners, media, and institutions looking for organizational information, projects, or contacts.
+The prototype does not include a backend, CMS, checkout, authentication, persistent form submission, document upload workflow, or production translations.
 
 ## Site Map
 
-The website contains the following pages:
+- `index.html`: landing page with full initial-viewport hero, latest five news items, testimonials, and newsletter form.
+- `nakladnistvo.html`: culture child page with description, `15 dana` product feature, and publishing news.
+- `galerije.html`: culture child page for Galerija Cekao and Galerija Bernardo Bernardi, plus gallery news.
+- `kreativne-radionice.html`: culture child page for Ples, Umjetni&#269;ke produkcije, and Fotografija, plus workshop news.
+- `koncerti.html`: culture child page with descriptive text and concert news.
+- `obrazovanje.html`: education page with four program sections and related news.
+- `erasmus.html`: Erasmus+ page with descriptive text and related news.
+- `projekti.html`: projects page with descriptive text and related news.
+- `vauceri.html`: HZZ voucher page with application flow, FAQ, and related news.
+- `vijesti.html`: searchable and filterable news archive.
+- `dokumenti.html`: searchable and filterable document archive.
+- `webshop.html`: existing webshop/catalog page.
+- `kontakt.html`: secondary contact page linked from CTAs and footers.
 
-- `index.html`: homepage and high-level entry point.
-- `programi.html`: searchable and filterable program overview.
-- `vauceri.html`: HZZ voucher explanation and application flow.
-- `o-ucilistu.html`: institutional overview, documents, projects, and Erasmus+ information.
-- `novosti.html`: news listing with dated updates and categories.
-- `blog.html`: editorial article listing with sidebar categories and archive links.
-- `kontakt.html`: contact details, department overview, inquiry form, and embedded map.
-- `webshop.html`: product listing for publications and materials.
+Legacy pages `programi.html`, `o-ucilistu.html`, `novosti.html`, and `blog.html` are kept as bridge pages to the new structure.
 
-## Global Layout And Navigation
+## Global Navigation
 
-Every main page uses a shared header with:
+The primary navigation contains:
 
-- POUZ logo and institution name linking to the homepage.
-- Primary navigation links for Homepage, Programi, Vauceri, O ucilistu, Novosti, Kontakt, and Webshop.
-- Dropdown submenus that expose important page sections and related links.
-- A highlighted Webshop navigation call-to-action.
-- HR and EN language links. HR points to the current page; EN is currently a placeholder.
-- A mobile menu toggle controlled by JavaScript.
-- A skip link that allows keyboard users to jump directly to main content.
-
-The navigation script marks the current page as active. When the user is on `blog.html`, the Novosti navigation item is treated as active because blog content belongs to the news/content area.
-
-## Homepage Requirements
-
-The homepage must act as a routing and orientation page for the whole website.
-
-Functional content:
-
-- Hero section introducing education, culture, and community.
-- Primary calls to action:
-  - Find a program.
-  - View HZZ voucher information.
-  - Send an inquiry.
-- Quick action links for active programs, vouchers, workshops, and webshop.
-- Featured information cards for Programi, Vauceri, and Novosti.
-- Newsletter sign-up form.
-- Full footer with address, quick links, social links, and document/privacy link.
-
-Current behavior:
-
-- Newsletter submission is intercepted by JavaScript.
-- Invalid email input triggers browser validity handling and a demo error/status message.
-- Successful submission resets the form and displays a demo confirmation message.
-
-## Programi Page Requirements
-
-The Programi page must help users discover and narrow programs.
-
-Functional content:
-
-- Page hero explaining the program section.
-- Program filters:
-  - Text search.
-  - Category selector.
-  - Status selector.
-- Program card grid.
-- Program category overview.
-
-Current program cards:
-
-- Srednja skola.
-- Administrativni poslovi, marked as an HZZ voucher-compatible education program.
-- Keramika i rad s glinom.
-- Sveuciliste za trecu zivotnu dob.
-
-Current categories:
-
+- Po&#269;etna.
+- Kultura as an organizational dropdown with no standalone page.
 - Obrazovanje.
-- Radionice.
-- Kultura.
-- Treca dob.
-- Vauceri.
+- Erasmus+.
+- Projekti.
+- Vau&#269;eri.
+- Vijesti.
+- Webshop.
 
-Current statuses:
+The HR/EN language toggle remains in the header. HR points to the current page and EN remains a placeholder. `Kontakt` and `Dokumenti` are intentionally excluded from the primary navigation and remain available through footer links and page calls to action.
 
-- Upisi otvoreni.
-- Uskoro.
+## Shared Data
 
-Current behavior:
+`assets/site-data.json` stores the editable source data, and `assets/site-data.js` exposes the same data to browsers that open the static HTML files directly from the folder.
 
-- Search checks the visible text of each program card.
-- Category filtering uses each card's `data-category` values.
-- Status filtering uses each card's `data-status` value.
-- Cards that do not match are hidden.
-- If no cards match the active filters, an empty-state message appears.
+- News items with category, date, summary, and image metadata.
+- Document archive entries with type, date, summary, and placeholder links.
+- The `15 dana` product reference used by the Nakladni&#353;tvo page.
 
-## Vauceri Page Requirements
+`script.js` uses the browser-ready data object first, falls back to loading the JSON over HTTP, and renders latest news, category news, the all-news archive, the document archive, and the `15 dana` price/buy link.
 
-The Vauceri page must serve users who are specifically looking for HZZ voucher information.
+## Interactions
 
-Functional content:
-
-- Dedicated red hero section for HZZ vouchers.
-- Explanation of the application route.
-- Ordered application steps:
-  - Choose a voucher-supported program.
-  - Check conditions and documentation.
-  - Submit an application or inquiry.
-  - Track status and enrollment deadlines.
-- Primary call to action leading to the Contact page.
-- FAQ area using native expandable `details` elements.
-
-Expected user outcome:
-
-- The user understands what to do next and can continue to program discovery or contact.
-
-## O Ucilistu Page Requirements
-
-The O ucilistu page must move institutional content out of the homepage and into a focused section.
-
-Functional content:
-
-- Institutional hero.
-- Overview of POUZ activities in adult education, culture, publishing, and international projects.
-- Key stats such as years of experience, active programs, and yearly participants.
-- Institutional link cards for:
-  - Documents.
-  - Projects.
-  - Erasmus+.
-  - Organization.
-
-Expected user outcome:
-
-- The visitor can understand the institution and find document/project-related entry points.
-
-## Novosti Page Requirements
-
-The Novosti page must provide a dedicated location for updates and dated announcements.
-
-Functional content:
-
-- News hero.
-- News listing with category tags, dates, titles, and summaries.
-- Section anchors for content categories such as Obrazovanje, Erasmus+, and Projekti.
-- Linkage to the Blog page through the global navigation submenu.
-
-Current news items:
-
-- Upisi u nove programe su otvoreni.
-- Novi Erasmus+ projekt i fokus grupa.
-- Superstudio, umjetnost i nove aktivnosti.
-
-## Blog Page Requirements
-
-The Blog page must support longer editorial content connected to POUZ themes.
-
-Functional content:
-
-- Blog hero.
-- List of article-style blog posts with images, category tags, dates, titles, and article body text.
-- Sidebar for categories and archive months.
-- Links from sidebar categories back to relevant sections of Novosti or Programi.
-
-Current limitation:
-
-- Blog posts use placeholder body copy and are static. There is no individual article detail route or CMS.
-
-## Kontakt Page Requirements
-
-The Kontakt page must provide contact information and a simple inquiry path.
-
-Functional content:
-
-- Contact hero.
-- General contact card with address, email, and working hours.
-- Department overview.
-- Inquiry form with required name, email, and message fields.
-- Embedded Google Map for the POUZ location.
-
-Current behavior:
-
-- Form submission is intercepted by JavaScript.
-- Invalid forms display a demo error/status message.
-- Valid forms reset and show a demo confirmation message.
-- No message is sent to an email address or server in the current implementation.
-
-## Webshop Page Requirements
-
-The Webshop page must present products and direct users toward purchase inquiries.
-
-Functional content:
-
-- Dedicated red hero section.
-- Product cards with image, category tag, title, description, price, and purchase inquiry link.
-- Product anchors for:
-  - Casopis 15 dana.
-  - Biblioteka Majstori.
-  - Kalendari.
-
-Current products:
-
-- Casopis 15 dana - novo izdanje, 12.00 EUR.
-- Publikacija iz biblioteke Majstori, 18.00 EUR.
-- Kalendar POUZ, 9.00 EUR.
-
-Current limitation:
-
-- The webshop is a catalog/inquiry prototype. It does not include a cart, checkout, stock management, payment, delivery selection, or order confirmation.
-
-## Shared Interactions
-
-### Active Navigation
-
-The JavaScript identifies the current filename from the URL and applies the active state to the matching primary navigation item. `blog.html` maps to the Novosti navigation item.
-
-### Mobile Navigation
-
-The mobile menu toggle:
-
-- Adds or removes the `nav-open` class on the header.
-- Updates `aria-expanded` on the toggle button.
-- Closes the navigation when the user clicks outside the header.
-- Closes the navigation when the Escape key is pressed.
-- Closes the navigation after selecting a primary navigation link.
-
-### Language Toggle
-
-The HR language link updates to the current page URL. Placeholder language links with `href="#"` are prevented from navigating.
-
-### Forms
-
-All forms are demo-only:
-
-- Submit events are prevented.
-- Required fields and email format are validated through browser form validity.
-- Demo status messages are displayed in each form's `.form-message` element.
-- Successful submission resets the form.
-
-## Accessibility Requirements
-
-Implemented accessibility features include:
-
-- Semantic HTML structure with header, navigation, main content, sections, articles, aside, and footer.
-- Skip link to main content.
-- `aria-label` values for navigation and grouped areas.
-- `aria-current` on active navigation items.
-- `aria-expanded` and `aria-controls` on the mobile menu button.
-- Screen-reader-only text for non-visible labels where needed.
-- Native HTML controls for forms, selects, buttons, links, details, and summaries.
-- Reduced-motion media query support in CSS.
-
-## Responsive Behavior
-
-The site must work across desktop, tablet, and mobile widths.
-
-Current responsive behavior includes:
-
-- Desktop horizontal navigation with dropdown submenus.
-- Mobile menu controlled by the hamburger button.
-- Responsive grids for features, programs, products, blog layout, contact content, and footer.
-- Reduced hero sizing and stacked layouts on smaller screens.
-
-## Visual And Content Direction
-
-The design uses:
-
-- A clean institutional layout suited to a public education organization.
-- Shared page heroes to make each page feel distinct.
-- Red accent treatment for high-priority sections such as HZZ vouchers and webshop.
-- Card grids for repeated content such as programs, features, products, news, and institutional links.
-- Placeholder images for hero media, program cards, blog posts, products, and institutional imagery.
-
-Future production work should replace placeholder images and placeholder article body text with approved real content.
-
-## Current Technical Scope
-
-Technology:
-
-- Static HTML.
-- Shared CSS in `styles.css`.
-- Shared JavaScript in `script.js`.
-- SVG logo asset in `assets/pou-logo.svg`.
-- External placeholder images from `placehold.co`.
-- Embedded Google Maps iframe on the contact page.
-
-No current backend features:
-
-- No CMS.
-- No persistent newsletter storage.
-- No contact form delivery.
-- No ecommerce checkout.
-- No authentication.
-- No server-side search.
-- No analytics integration.
+- Mobile navigation opens and closes with the menu button, outside click, Escape, or link selection.
+- Active navigation state is based on the current filename; culture child pages activate `Kultura`.
+- `Vijesti` supports text search and category filtering.
+- `Dokumenti` supports text search and document-type filtering.
+- Newsletter and contact forms are demo-only and show local validation/status messages.
+- FAQ content uses native `details` and `summary` elements.
 
 ## Acceptance Criteria
 
-- Users can navigate between all primary pages using the global navigation.
-- Dropdown submenu links lead to the relevant page sections.
-- The mobile navigation opens, closes, and updates accessibility state correctly.
-- The active navigation item reflects the current page.
-- Program search, category filtering, and status filtering hide and show cards correctly.
-- Empty program search/filter results display an empty-state message.
-- Newsletter and contact forms validate required fields and show demo confirmation messages.
-- Webshop product inquiry buttons route users to the contact page.
-- Contact page displays general contact details, department list, inquiry form, and location map.
-- Pages remain readable and usable on desktop and mobile screen sizes.
-
-## Recommended Future Enhancements
-
-- Connect newsletter and inquiry forms to real backend services.
-- Add a CMS or structured data source for programs, news, blog posts, documents, products, and staff contacts.
-- Add individual detail pages for programs, news items, blog posts, and products.
-- Add real ecommerce functionality if online purchase is required.
-- Implement EN language pages or hide inactive language options until translations exist.
-- Replace placeholder imagery with approved photography and product images.
-- Add analytics and conversion tracking for program inquiries, voucher interest, and webshop clicks.
-- Add structured SEO metadata and sitemap generation.
+- All public navigation links resolve to existing local pages.
+- `Kultura` is a dropdown/organizational item and does not link to `kultura.html`.
+- `Dokumenti` is available from the shared footer, not from the header.
+- Homepage latest news shows exactly five newest items from the JSON data.
+- Category pages render only related news.
+- `Vijesti` and `Dokumenti` filters display matching items and an empty state.
+- The `Nakladni&#353;tvo` `15 dana` price matches the webshop product price.
+- The site remains readable and usable on desktop, tablet, and mobile widths.
