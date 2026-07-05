@@ -1,7 +1,225 @@
 const header = document.querySelector(".site-header");
 const menuToggle = document.querySelector(".menu-toggle");
+const programSearch = document.querySelector("#program-search");
+const categoryFilter = document.querySelector("#category-filter");
+const statusFilter = document.querySelector("#status-filter");
+const programCards = document.querySelectorAll("#program-list .program-card");
+const emptyPrograms = document.querySelector("#empty-programs");
 const forms = document.querySelectorAll("form");
 const languageLinks = document.querySelectorAll(".language-toggle .lang-link");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const motionRevealSelector = [
+  ".hero",
+  ".page-hero",
+  ".promo-banner",
+  ".quick-actions",
+  ".section-heading",
+  ".feature-grid article",
+  ".testimonial-card",
+  ".program-card",
+  ".ia-grid article",
+  ".news-list article",
+  ".blog-post",
+  ".blog-sidebar section",
+  ".faq-card",
+  ".split-copy",
+  ".split-image",
+  ".stats div",
+  ".product-card",
+  ".shop-group-heading",
+  ".product-gallery",
+  ".product-detail-copy",
+  ".cart-panel",
+  ".cart-item",
+  ".order-summary",
+  ".checkout-form",
+  ".checkout-confirmation",
+  ".participant-card",
+  ".contact-grid article",
+  ".contact-form",
+  ".newsletter-section",
+].join(",");
+
+const CART_STORAGE_KEY = "pouzCartV1";
+const DELIVERY_PRICE = 4;
+const products = {
+  "casopis-15-dana": {
+    name: "\u010casopis 15 dana",
+    category: "\u010casopis",
+    price: 12,
+    type: "physical",
+  },
+  "biblioteka-majstori": {
+    name: "Biblioteka Majstori",
+    category: "Publikacija",
+    price: 18,
+    type: "physical",
+  },
+  "kalendar-pouz": {
+    name: "Kalendar POUZ",
+    category: "Kalendar",
+    price: 9,
+    type: "physical",
+  },
+  "engleski-online": {
+    name: "Engleski jezik (online)",
+    category: "Online program",
+    price: 120,
+    type: "program",
+    extra: "level",
+  },
+  "keramicka-radionica": {
+    name: "Kerami\u010dka radionica",
+    category: "Radionica",
+    price: 65,
+    type: "program",
+    extra: "experience",
+  },
+  "vodoinstalatersko-osposobljavanje": {
+    name: "Vodoinstalatersko osposobljavanje",
+    category: "Osposobljavanje",
+    price: 490,
+    type: "program",
+    extra: "voucher",
+  },
+};
+
+let revealObserver = null;
+
+function isReducedMotion() {
+  return reducedMotionQuery.matches;
+}
+
+function showRevealElement(element) {
+  element.classList.add("is-visible");
+}
+
+function prepareRevealElement(element, index = 0) {
+  if (!element || element.classList.contains("motion-reveal-ready")) {
+    return;
+  }
+
+  const delay = Math.min((index % 6) * 45, 225);
+  element.classList.add("motion-reveal", "motion-reveal-ready");
+  element.style.setProperty("--motion-delay", `${delay}ms`);
+
+  if (isReducedMotion()) {
+    showRevealElement(element);
+    return;
+  }
+
+  if (element.matches(".hero, .page-hero")) {
+    window.requestAnimationFrame(() => showRevealElement(element));
+    return;
+  }
+
+  if (revealObserver) {
+    revealObserver.observe(element);
+  } else {
+    showRevealElement(element);
+  }
+}
+
+function observeMotionElements(root = document) {
+  const targets = Array.from(root.querySelectorAll(motionRevealSelector));
+
+  targets.forEach((element, index) => {
+    prepareRevealElement(element, index);
+  });
+}
+
+function setupScrollReveals() {
+  document.documentElement.classList.add("motion-ready");
+
+  if (!("IntersectionObserver" in window) || isReducedMotion()) {
+    observeMotionElements();
+    return;
+  }
+
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        showRevealElement(entry.target);
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    {
+      rootMargin: "0px 0px -10% 0px",
+      threshold: 0.12,
+    }
+  );
+
+  observeMotionElements();
+}
+
+function pulseCartCount() {
+  if (isReducedMotion()) {
+    return;
+  }
+
+  document.querySelectorAll("[data-cart-count]").forEach((badge) => {
+    badge.classList.remove("is-pulsing");
+    void badge.offsetWidth;
+    badge.classList.add("is-pulsing");
+  });
+}
+
+function confirmButtonAction(button) {
+  if (!button || isReducedMotion()) {
+    return;
+  }
+
+  button.classList.remove("is-confirming");
+  void button.offsetWidth;
+  button.classList.add("is-confirming");
+  window.setTimeout(() => {
+    button.classList.remove("is-confirming");
+  }, 700);
+}
+
+function revealMessage(element) {
+  if (!element || isReducedMotion()) {
+    return;
+  }
+
+  if (element.classList.contains("motion-reveal")) {
+    showRevealElement(element);
+  }
+
+  element.classList.remove("is-revealing");
+  void element.offsetWidth;
+  element.classList.add("is-revealing");
+  window.setTimeout(() => {
+    element.classList.remove("is-revealing");
+  }, 620);
+}
+
+function animateProgramFilterResults(visibleCards) {
+  if (isReducedMotion()) {
+    return;
+  }
+
+  programCards.forEach((card) => {
+    card.classList.remove("is-filter-entering");
+    card.style.removeProperty("--filter-delay");
+  });
+
+  visibleCards.forEach((card, index) => {
+    card.style.setProperty("--filter-delay", `${Math.min(index * 55, 220)}ms`);
+    void card.offsetWidth;
+    card.classList.add("is-filter-entering");
+  });
+
+  if (emptyPrograms && !emptyPrograms.hidden) {
+    emptyPrograms.classList.remove("is-filter-entering");
+    void emptyPrograms.offsetWidth;
+    emptyPrograms.classList.add("is-filter-entering");
+  }
+}
 
 const culturePages = new Set([
   "nakladnistvo.html",
@@ -30,6 +248,8 @@ function currentNavKey(fileName) {
     "blog.html": "vijesti",
     "dokumenti.html": "dokumenti",
     "webshop.html": "webshop",
+    "kosarica.html": "webshop",
+    "proizvod.html": "webshop",
     "programi.html": "obrazovanje",
     "o-ucilistu.html": "dokumenti",
   };
@@ -106,7 +326,466 @@ if (header && menuToggle) {
   });
 }
 
+function filterPrograms() {
+  const query = programSearch.value.trim().toLowerCase();
+  const category = categoryFilter.value;
+  const status = statusFilter.value;
+  let visibleCount = 0;
+  const visibleCards = [];
+
+  programCards.forEach((card) => {
+    const text = card.textContent.toLowerCase();
+    const categories = card.dataset.category.split(" ");
+    const cardStatus = card.dataset.status;
+    const matchesQuery = !query || text.includes(query);
+    const matchesCategory = category === "sve" || categories.includes(category);
+    const matchesStatus = status === "sve" || cardStatus === status;
+    const isVisible = matchesQuery && matchesCategory && matchesStatus;
+
+    card.hidden = !isVisible;
+    if (isVisible) {
+      visibleCount += 1;
+      visibleCards.push(card);
+    }
+  });
+
+  if (emptyPrograms) {
+    emptyPrograms.hidden = visibleCount !== 0;
+    if (emptyPrograms.hidden) {
+      emptyPrograms.classList.remove("is-filter-entering");
+    }
+  }
+
+  animateProgramFilterResults(visibleCards);
+}
+
+if (programSearch && categoryFilter && statusFilter && programCards.length) {
+  [programSearch, categoryFilter, statusFilter].forEach((control) => {
+    control.addEventListener("input", filterPrograms);
+  });
+}
+
+function formatPrice(value) {
+  return `${value.toLocaleString("hr-HR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} EUR`;
+}
+
+function readCart() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item) => products[item.id]);
+    }
+  } catch (error) {
+    return [];
+  }
+
+  return [];
+}
+
+function writeCart(cart) {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  updateCartCount();
+}
+
+function getCartCount(cart = readCart()) {
+  return cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+function updateCartCount() {
+  const cart = readCart();
+  const count = getCartCount(cart);
+
+  document.querySelectorAll("[data-cart-count]").forEach((badge) => {
+    badge.textContent = String(count);
+  });
+}
+
+function addToCart(productId, quantity = 1) {
+  const product = products[productId];
+
+  if (!product) {
+    return;
+  }
+
+  const cart = readCart();
+  const existingItem = cart.find((item) => item.id === productId);
+  const nextQuantity = product.type === "program" ? 1 : Math.max(1, Number(quantity) || 1);
+
+  if (existingItem) {
+    existingItem.quantity = product.type === "program" ? 1 : existingItem.quantity + nextQuantity;
+  } else {
+    cart.push({ id: productId, quantity: nextQuantity });
+  }
+
+  writeCart(cart);
+  pulseCartCount();
+}
+
+function setCartQuantity(productId, quantity) {
+  const product = products[productId];
+  const nextQuantity = Math.max(1, Number(quantity) || 1);
+  const cart = readCart().map((item) => {
+    if (item.id !== productId) {
+      return item;
+    }
+
+    return {
+      ...item,
+      quantity: product && product.type === "program" ? 1 : nextQuantity,
+    };
+  });
+
+  writeCart(cart);
+  renderCartPage();
+}
+
+function removeFromCart(productId) {
+  const cart = readCart().filter((item) => item.id !== productId);
+  writeCart(cart);
+  renderCartPage();
+}
+
+function getCartTotals(cart = readCart()) {
+  const subtotal = cart.reduce((total, item) => total + products[item.id].price * item.quantity, 0);
+  const hasPhysical = cart.some((item) => products[item.id].type === "physical");
+  const deliveryChoice = document.querySelector('input[name="fulfillment"]:checked');
+  const delivery = hasPhysical && deliveryChoice && deliveryChoice.value === "delivery" ? DELIVERY_PRICE : 0;
+
+  return {
+    subtotal,
+    delivery,
+    total: subtotal + delivery,
+    hasPhysical,
+    hasPrograms: cart.some((item) => products[item.id].type === "program"),
+  };
+}
+
+function getExtraFields(product, fieldPrefix) {
+  if (product.extra === "level") {
+    return `
+      <label>
+        Trenutna razina engleskog jezika
+        <select name="${fieldPrefix}Level">
+          <option value="">Odaberite razinu</option>
+          <option>Po\u010detna</option>
+          <option>Srednja</option>
+          <option>Napredna</option>
+        </select>
+      </label>
+    `;
+  }
+
+  if (product.extra === "experience") {
+    return `
+      <label>
+        Iskustvo s keramikom
+        <select name="${fieldPrefix}Experience">
+          <option value="">Odaberite iskustvo</option>
+          <option>Bez iskustva</option>
+          <option>Osnovno iskustvo</option>
+          <option>Napredno iskustvo</option>
+        </select>
+      </label>
+    `;
+  }
+
+  if (product.extra === "voucher") {
+    return `
+      <label>
+        Razina obrazovanja
+        <select name="${fieldPrefix}Education">
+          <option value="">Odaberite razinu</option>
+          <option>Osnovna skola</option>
+          <option>Srednja skola</option>
+          <option>Visoko obrazovanje</option>
+        </select>
+      </label>
+      <label class="choice-row">
+        <input type="checkbox" name="${fieldPrefix}Voucher" />
+        Zainteresiran/a sam za HZZ vaucer
+      </label>
+    `;
+  }
+
+  return "";
+}
+
+function renderParticipantFields(cart) {
+  const participantFields = document.querySelector("#participant-fields");
+
+  if (!participantFields) {
+    return;
+  }
+
+  const programItems = cart.filter((item) => products[item.id].type === "program");
+
+  participantFields.innerHTML = programItems
+    .map((item, index) => {
+      const product = products[item.id];
+      const fieldPrefix = `participant${index}`;
+
+      return `
+        <div class="participant-card">
+          <h3>${product.name}</h3>
+          <label>
+            Ime i prezime polaznika
+            <input type="text" name="${fieldPrefix}Name" required />
+          </label>
+          <label>
+            E-posta polaznika
+            <input type="email" name="${fieldPrefix}Email" required />
+          </label>
+          <label>
+            Telefon polaznika
+            <input type="tel" name="${fieldPrefix}Phone" required />
+          </label>
+          <label>
+            Datum rodenja
+            <input type="date" name="${fieldPrefix}BirthDate" required />
+          </label>
+          <label>
+            OIB
+            <input type="text" name="${fieldPrefix}Oib" inputmode="numeric" required />
+          </label>
+          ${getExtraFields(product, fieldPrefix)}
+          <label>
+            Napomena za program
+            <textarea name="${fieldPrefix}Note" rows="3"></textarea>
+          </label>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function updateCheckoutVisibility(cart) {
+  const deliveryOptions = document.querySelector("#delivery-options");
+  const deliveryAddressFields = document.querySelector("#delivery-address-fields");
+  const participantSection = document.querySelector("#participant-section");
+  const checkoutForm = document.querySelector("#checkout-form");
+  const totals = getCartTotals(cart);
+
+  if (deliveryOptions) {
+    deliveryOptions.hidden = !totals.hasPhysical;
+  }
+
+  if (participantSection) {
+    participantSection.hidden = !totals.hasPrograms;
+  }
+
+  if (checkoutForm) {
+    checkoutForm.hidden = cart.length === 0;
+  }
+
+  if (deliveryAddressFields) {
+    const deliveryChoice = document.querySelector('input[name="fulfillment"]:checked');
+    const needsAddress = totals.hasPhysical && deliveryChoice && deliveryChoice.value === "delivery";
+    deliveryAddressFields.hidden = !needsAddress;
+    deliveryAddressFields.querySelectorAll("input").forEach((input) => {
+      input.required = needsAddress;
+    });
+  }
+}
+
+function updateSummary(cart = readCart()) {
+  const totals = getCartTotals(cart);
+  const subtotalEl = document.querySelector("[data-cart-subtotal]");
+  const deliveryEl = document.querySelector("[data-cart-delivery]");
+  const totalEl = document.querySelector("[data-cart-total]");
+
+  if (subtotalEl) {
+    subtotalEl.textContent = formatPrice(totals.subtotal);
+  }
+
+  if (deliveryEl) {
+    deliveryEl.textContent = totals.hasPhysical ? formatPrice(totals.delivery) : "Nije potrebno";
+  }
+
+  if (totalEl) {
+    totalEl.textContent = formatPrice(totals.total);
+  }
+}
+
+function renderCartPage() {
+  const cartItems = document.querySelector("#cart-items");
+  const emptyCart = document.querySelector("#cart-empty");
+  const cartLayout = document.querySelector("#cart-layout");
+  const confirmation = document.querySelector("#checkout-confirmation");
+
+  if (!cartItems) {
+    return;
+  }
+
+  const cart = readCart();
+  const isEmpty = cart.length === 0;
+
+  if (emptyCart) {
+    emptyCart.hidden = !isEmpty;
+  }
+
+  if (confirmation && !isEmpty) {
+    confirmation.hidden = true;
+    confirmation.textContent = "";
+  }
+
+  if (cartLayout) {
+    cartLayout.hidden = isEmpty;
+  }
+
+  cartItems.innerHTML = cart
+    .map((item) => {
+      const product = products[item.id];
+      const lineTotal = product.price * item.quantity;
+      const quantityControl =
+        product.type === "program"
+          ? `<span class="fixed-quantity">1 polaznik</span>`
+          : `
+            <label class="quantity-control">
+              <span>Kolicina</span>
+              <input type="number" min="1" max="20" value="${item.quantity}" data-cart-quantity="${item.id}" />
+            </label>
+          `;
+
+      return `
+        <article class="cart-item">
+          <div>
+            <span class="tag">${product.category}</span>
+            <h3>${product.name}</h3>
+            <p>${product.type === "program" ? "Podaci o polazniku unose se u checkoutu." : "Fizicki proizvod za dostavu ili preuzimanje."}</p>
+          </div>
+          ${quantityControl}
+          <strong>${formatPrice(lineTotal)}</strong>
+          <button class="button small secondary-action" type="button" data-remove-from-cart="${item.id}">Ukloni</button>
+        </article>
+      `;
+    })
+    .join("");
+
+  renderParticipantFields(cart);
+  updateCheckoutVisibility(cart);
+  updateSummary(cart);
+  observeMotionElements(cartItems);
+
+  const participantFields = document.querySelector("#participant-fields");
+  if (participantFields) {
+    observeMotionElements(participantFields);
+  }
+}
+
+document.querySelectorAll("[data-add-to-cart]").forEach((button) => {
+  const detailForm = button.closest("[data-product-detail-form]");
+
+  if (detailForm) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    addToCart(button.dataset.addToCart);
+    confirmButtonAction(button);
+    button.textContent = "Dodano";
+    window.setTimeout(() => {
+      button.textContent = "Dodaj u ko\u0161aricu";
+    }, 1100);
+  });
+});
+
+const detailForm = document.querySelector("[data-product-detail-form]");
+if (detailForm) {
+  detailForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const button = detailForm.querySelector("[data-add-to-cart]");
+    const quantityInput = detailForm.querySelector('input[name="quantity"]');
+    const message = detailForm.querySelector(".form-message");
+
+    addToCart(button.dataset.addToCart, quantityInput.value);
+    confirmButtonAction(button);
+
+    if (message) {
+      message.textContent = "Proizvod je dodan u ko\u0161aricu.";
+      message.classList.remove("is-error");
+      revealMessage(message);
+    }
+  });
+}
+
+document.addEventListener("input", (event) => {
+  const quantityInput = event.target.closest("[data-cart-quantity]");
+
+  if (quantityInput) {
+    setCartQuantity(quantityInput.dataset.cartQuantity, quantityInput.value);
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const removeButton = event.target.closest("[data-remove-from-cart]");
+
+  if (removeButton) {
+    removeFromCart(removeButton.dataset.removeFromCart);
+  }
+});
+
+document.querySelectorAll('input[name="fulfillment"]').forEach((input) => {
+  input.addEventListener("change", () => {
+    const cart = readCart();
+    updateCheckoutVisibility(cart);
+    updateSummary(cart);
+  });
+});
+
+const checkoutForm = document.querySelector("#checkout-form");
+if (checkoutForm) {
+  checkoutForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const message = checkoutForm.querySelector(".form-message");
+    const confirmation = document.querySelector("#checkout-confirmation");
+    const cart = readCart();
+
+    if (!cart.length) {
+      if (message) {
+        message.textContent = "Kosarica je prazna. Dodajte proizvod prije checkouta.";
+        message.classList.add("is-error");
+        revealMessage(message);
+      }
+      return;
+    }
+
+    updateCheckoutVisibility(cart);
+
+    if (!checkoutForm.checkValidity()) {
+      checkoutForm.reportValidity();
+      if (message) {
+        message.textContent = "Provjerite obavezna polja i pokusajte ponovno.";
+        message.classList.add("is-error");
+        revealMessage(message);
+      }
+      return;
+    }
+
+    const confirmationNumber = `POUZ-${Date.now().toString().slice(-6)}`;
+    localStorage.removeItem(CART_STORAGE_KEY);
+    updateCartCount();
+    renderCartPage();
+    checkoutForm.reset();
+
+    if (message) {
+      message.textContent = "";
+      message.classList.remove("is-error");
+    }
+
+    if (confirmation) {
+      confirmation.hidden = false;
+      confirmation.textContent = `Demo narudzba ${confirmationNumber} je prikazana kao zaprimljena. Placanje nije provedeno i narudzba nije poslana.`;
+      observeMotionElements(confirmation.parentElement || document);
+      revealMessage(confirmation);
+    }
+  });
+}
+
 forms.forEach((form) => {
+  if (form.id === "checkout-form" || form.matches("[data-product-detail-form]")) {
+    return;
+  }
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const message = form.querySelector(".form-message");
@@ -118,12 +797,14 @@ forms.forEach((form) => {
     if (!form.checkValidity()) {
       message.textContent = "Provjerite obavezna polja i pokusajte ponovno.";
       message.classList.add("is-error");
+      revealMessage(message);
       return;
     }
 
     form.reset();
     message.textContent = "Hvala. Vasa poruka je zaprimljena u ovoj demo verziji.";
     message.classList.remove("is-error");
+    revealMessage(message);
   });
 });
 
@@ -168,6 +849,7 @@ function renderNewsList(container, items, options = {}) {
   const visibleItems = sortByNewest(items).slice(0, limit);
 
   container.innerHTML = visibleItems.map((item) => articleTemplate(item, useLarge)).join("");
+  observeMotionElements(container);
 }
 
 function renderLatestNews(data) {
@@ -253,6 +935,7 @@ function setupDocumentArchive(data) {
     if (empty) {
       empty.hidden = items.length !== 0;
     }
+    observeMotionElements(list);
   }
 
   search.addEventListener("input", render);
@@ -304,3 +987,15 @@ loadSiteData()
       element.textContent = "Sadrzaj nije moguce ucitati u ovoj demo verziji.";
     });
   });
+
+if (typeof reducedMotionQuery.addEventListener === "function") {
+  reducedMotionQuery.addEventListener("change", () => {
+    if (isReducedMotion()) {
+      document.querySelectorAll(".motion-reveal").forEach(showRevealElement);
+    }
+  });
+}
+
+setupScrollReveals();
+updateCartCount();
+renderCartPage();
