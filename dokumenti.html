@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="HZZ vau&#269;eri i programi POUZ-a." />
-    <title>Vau&#269;eri - POUZ</title>
+    <meta name="description" content="Arhiva dokumenata POUZ-a." />
+    <title>Dokumenti - POUZ</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -55,32 +55,16 @@
   </div>
 </header>
     <main id="main-content">
-      <section class="page-hero red-hero">
-        <h1>Financiranje obrazovanja jasnim koracima</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere hendrerit neque, vitae efficitur lectus gravida non.</p>
-      </section>
-      <section id="nacin-prijave" class="section vouchers-section">
-        <div class="split-copy">
-          <h2>Odabir programa, provjera uvjeta i prijava</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel sapien sed ipsum viverra tristique.</p>
-          <ol class="steps">
-            <li>Odaberite program koji podrzava vau&#269;er.</li>
-            <li>Provjerite uvjete i potrebnu dokumentaciju.</li>
-            <li>Ispunite online prijavu ili posaljite upit.</li>
-            <li>Pratite status i rokove upisa.</li>
-          </ol>
-          <a class="button primary" href="kontakt.html">Pokreni prijavu</a>
+      <section class="page-hero"><h1>Arhiva objavljenih dokumenata</h1><p>Pretra&#382;ite dokumente prema nazivu, opisu ili vrsti dokumenta.</p></section>
+      <section class="section">
+        <div class="archive-layout">
+          <div class="filters two-controls" aria-label="Filtri dokumenata">
+            <label><span>Pretra&#382;ivanje</span><input id="document-search" type="search" placeholder="Pretra&#382;i dokumente" /></label>
+            <label><span>Vrsta</span><select id="document-type"><option value="sve">Sve vrste</option><option value="pravni">Pravni dokumenti</option><option value="financije">Financije</option><option value="natjecaji">Natje&#269;aji</option><option value="izvjesca">Izvje&#353;&#263;a</option></select></label>
+          </div>
+          <div id="document-list" class="document-grid" data-dynamic-status="U&#269;itavanje dokumenata..."></div>
+          <p class="empty-state" id="empty-documents" hidden>Nema dokumenata za odabrane filtre.</p>
         </div>
-        <div id="cesta-pitanja" class="faq-card">
-          <h3>&#268;esta pitanja</h3>
-          <details open><summary>Tko mo&#382;e koristiti HZZ vau&#269;er?</summary><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></details>
-          <details><summary>Koji programi su dostupni?</summary><p>Programi uz vau&#269;er prikazani su kroz obrazovne programe i vijesti.</p></details>
-          <details><summary>Kako se prijavljujem?</summary><p>Kontakt obrazovanja vodi korisnika kroz uvjete, dokumente i rokove.</p></details>
-        </div>
-      </section>
-      <section id="vijesti" class="section band">
-        <div class="section-heading"><p class="eyebrow">Vijesti</p><h2>Novosti o vau&#269;erima</h2></div>
-        <div class="news-list" data-news-category="vauceri" data-dynamic-status="U&#269;itavanje vijesti..."></div>
       </section>
     </main>
     <footer class="site-footer">

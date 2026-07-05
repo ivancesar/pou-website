@@ -1,238 +1,102 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Programi obrazovanja, radionice, kultura i nakladnistvo POUZ-a." />
+    <meta name="description" content="Programi su premje&#353;teni u novu strukturu stranice POUZ-a." />
     <title>Programi - POUZ</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Presko&#269;i na sadr&#382;aj</a>
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="POUZ naslovnica">
-        <span class="brand-logo"><img src="assets/pou-logo.svg" alt="POUZ" /></span>
-        <span class="brand-text">Pu&#269;ko otvoreno u&#269;ili&#353;te Zagreb</span>
-      </a>
+  <a class="brand" href="index.html" aria-label="POUZ naslovnica">
+    <span class="brand-logo"><img src="assets/pou-logo.svg" alt="POUZ" /></span>
+  </a>
 
-      <nav id="primary-navigation" class="primary-nav" aria-label="Glavni izbornik">
-        <ul>
-          <li class="has-submenu">
-            <a class="nav-link" href="index.html">Naslovnica</a>
-            <ul class="submenu">
-              <li><a href="index.html#brze-poveznice">Brze poveznice</a></li>
-              <li><a href="index.html#izdvojeno">Izdvojeno</a></li>
-              <li><a href="index.html#e-novosti">E-novosti</a></li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a class="nav-link" href="programi.html">Programi</a>
-            <ul class="submenu submenu-wide">
-              <li><a href="programi.html#aktivni-programi">Aktivni programi</a></li>
-              <li><a href="programi.html#podrucja">Podru&#269;ja</a></li>
-              <li><a href="programi.html#obrazovanje">Obrazovanje</a></li>
-              <li><a href="programi.html#radionice">Radionice</a></li>
-              <li><a href="programi.html#kultura">Kultura</a></li>
-              <li><a href="programi.html#nakladnistvo">Nakladni&#353;tvo</a></li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a class="nav-link" href="vauceri.html">Vau&#269;eri</a>
-            <ul class="submenu">
-              <li><a href="vauceri.html#nacin-prijave">Na&#269;in prijave</a></li>
-              <li><a href="vauceri.html#cesta-pitanja">&#268;esta pitanja</a></li>
-              <li><a href="programi.html#aktivni-programi">Programi uz vau&#269;er</a></li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a class="nav-link" href="o-ucilistu.html">O u&#269;ili&#353;tu</a>
-            <ul class="submenu">
-              <li><a href="o-ucilistu.html#o-nama">O nama</a></li>
-              <li><a href="o-ucilistu.html#dokumenti">Dokumenti</a></li>
-              <li><a href="o-ucilistu.html#projekti">Projekti</a></li>
-              <li><a href="o-ucilistu.html#erasmus">Erasmus+</a></li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a class="nav-link" href="novosti.html">Novosti</a>
-            <ul class="submenu">
-              <li><a href="novosti.html#sve-novosti">Sve novosti</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="novosti.html#obrazovanje">Obrazovanje</a></li>
-              <li><a href="novosti.html#erasmus">Erasmus+</a></li>
-              <li><a href="novosti.html#projekti">Projekti</a></li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a class="nav-link" href="kontakt.html">Kontakt</a>
-            <ul class="submenu">
-              <li><a href="kontakt.html#opci-kontakt">Op&#263;i kontakt</a></li>
-              <li><a href="kontakt.html#lokacija">Lokacija</a></li>
-              <li><a href="kontakt.html#odjeli">Odjeli</a></li>
-              <li><a href="kontakt.html#upit">Po&#353;alji upit</a></li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a class="nav-link nav-cta" href="webshop.html">Webshop</a>
-            <ul class="submenu">
-              <li><a href="webshop.html#proizvodi">Svi proizvodi</a></li>
-              <li><a href="webshop.html#publikacije">Publikacije</a></li>
-              <li><a href="webshop.html#programi-kupnja">Programi i radionice</a></li>
-              <li><a href="kosarica.html">Ko&#353;arica</a></li>
-            </ul>
-          </li>
+  <nav id="primary-navigation" class="primary-nav" aria-label="Glavni izbornik">
+    <ul>
+      <li><a class="nav-link" data-nav="pocetna" href="index.html">Po&#269;etna</a></li>
+      <li class="has-submenu">
+        <button class="nav-link nav-parent" data-nav="kultura" type="button">Kultura</button>
+        <ul class="submenu">
+          <li><a href="nakladnistvo.html">Nakladni&#353;tvo</a></li>
+          <li><a href="galerije.html">Galerije</a></li>
+          <li><a href="kreativne-radionice.html">Kreativne radionice</a></li>
+          <li><a href="koncerti.html">Koncerti</a></li>
         </ul>
-      </nav>
+      </li>
+      <li class="has-submenu">
+        <a class="nav-link" data-nav="obrazovanje" href="obrazovanje.html">Obrazovanje</a>
+        <ul class="submenu">
+          <li><a href="obrazovanje.html#osnovna-skola">Osnovna &#353;kola za odrasle</a></li>
+          <li><a href="obrazovanje.html#srednja-skola">Srednja &#353;kola</a></li>
+          <li><a href="obrazovanje.html#osposobljavanje">Osposobljavanje</a></li>
+          <li><a href="obrazovanje.html#usavrsavanje">Usavr&#353;avanje</a></li>
+        </ul>
+      </li>
+      <li><a class="nav-link" data-nav="erasmus" href="erasmus.html">Erasmus+</a></li>
+      <li><a class="nav-link" data-nav="projekti" href="projekti.html">Projekti</a></li>
+      <li><a class="nav-link" data-nav="vauceri" href="vauceri.html">Vau&#269;eri</a></li>
+      <li><a class="nav-link" data-nav="vijesti" href="vijesti.html">Vijesti</a></li>
+      <li><a class="nav-link nav-cta" data-nav="webshop" href="webshop.html">Webshop</a></li>
+    </ul>
+  </nav>
 
-      <div class="header-actions">
-        <a class="cart-link" href="kosarica.html" aria-label="Ko&#353;arica">
-          <span>Ko&#353;arica</span>
-          <strong class="cart-count" data-cart-count>0</strong>
-        </a>
-        <nav class="language-toggle" aria-label="Odabir jezika">
-          <a class="lang-link is-active" href="#" hreflang="hr" aria-current="true">HR</a>
-          <a class="lang-link" href="#" hreflang="en">EN</a>
-        </nav>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span class="sr-only">Otvori izbornik</span>
-        </button>
-      </div>
-    </header>
-
+  <div class="header-actions">
+    <a class="cart-link" href="kosarica.html" aria-label="Ko&#353;arica">
+      <span>Ko&#353;arica</span>
+      <strong class="cart-count" data-cart-count>0</strong>
+    </a>
+    <nav class="language-toggle" aria-label="Odabir jezika">
+      <a class="lang-link is-active" href="#" hreflang="hr" aria-current="true">HR</a>
+      <a class="lang-link" href="#" hreflang="en">EN</a>
+    </nav>
+  </div>
+</header>
     <main id="main-content">
-      <aside class="promo-banner" aria-label="Posebna pogodnost">
-        <p>Novi korisnici imaju 15&euro; popusta prilikom upisa!</p>
-      </aside>
-
       <section class="page-hero">
-        <p class="eyebrow">Programi</p>
-        <h1>Obrazovanje, radionice i kultura na jednoj programskoj stranici</h1>
-        <p>Pretra&#382;ite aktivne programe prema podrucju, statusu i mogucnosti prijave.</p>
-      </section>
-
-      <section id="aktivni-programi" class="section">
-        <div class="filters" aria-label="Filtri programa">
-          <label>
-            <span>Pretra&#382;ivanje</span>
-            <input id="program-search" type="search" placeholder="Pretra&#382;i programe" />
-          </label>
-          <label>
-            <span>Kategorija</span>
-            <select id="category-filter">
-              <option value="sve">Sve kategorije</option>
-              <option value="obrazovanje">Obrazovanje</option>
-              <option value="radionice">Radionice</option>
-              <option value="kultura">Kultura</option>
-              <option value="treca-dob">Treca dob</option>
-              <option value="vau&#269;eri">Vau&#269;eri</option>
-            </select>
-          </label>
-          <label>
-            <span>Status</span>
-            <select id="status-filter">
-              <option value="sve">Svi statusi</option>
-              <option value="otvoreno">Upisi otvoreni</option>
-              <option value="uskoro">Uskoro</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="program-grid" id="program-list">
-          <article id="obrazovanje" class="program-card" data-category="obrazovanje" data-status="otvoreno">
-            <img src="https://placehold.co/640x420/f4f4f4/777777?text=&#352;kola" alt="" />
-            <div>
-              <span class="tag">Obrazovanje</span>
-              <h3>Srednja &#353;kola</h3>
-              <p>Programi za nastavak i dovrsetak srednjoskolskog obrazovanja.</p>
-              <a href="kontakt.html" class="text-link">Online prijava</a>
-            </div>
-          </article>
-          <article class="program-card" data-category="vau&#269;eri obrazovanje" data-status="otvoreno">
-            <img src="https://placehold.co/640x420/f4f4f4/777777?text=Vaucer" alt="" />
-            <div>
-              <span class="tag">HZZ vau&#269;er</span>
-              <h3>Administrativni poslovi</h3>
-              <p>Verificirani program pogodan za financiranje putem vau&#269;era.</p>
-              <a href="vauceri.html" class="text-link">Provjeri uvjete</a>
-            </div>
-          </article>
-          <article class="program-card" data-category="radionice kultura" data-status="uskoro" id="radionice">
-            <img src="https://placehold.co/640x420/f4f4f4/777777?text=Radionica" alt="" />
-            <div>
-              <span class="tag">Radionica</span>
-              <h3>Keramika i rad s glinom</h3>
-              <p>Kreativna radionica za polaznike koji zele praktican rad.</p>
-              <a href="kontakt.html" class="text-link">Detalji radionice</a>
-            </div>
-          </article>
-          <article class="program-card" data-category="treca-dob" data-status="otvoreno">
-            <img src="https://placehold.co/640x420/f4f4f4/777777?text=Treca+dob" alt="" />
-            <div>
-              <span class="tag">Treca dob</span>
-              <h3>Sveu&#269;ili&#353;te za tre&#263;u &#382;ivotnu dob</h3>
-              <p>Programi ucenja, kulture i druzenja za starije polaznike.</p>
-              <a href="kontakt.html" class="text-link">Pregled programa</a>
-            </div>
-          </article>
-        </div>
-        <p class="empty-state" id="empty-programs" hidden>Nema programa za odabrane filtre.</p>
-      </section>
-
-      <section id="podrucja" class="section band">
-        <div class="section-heading align-left">
-          <p class="eyebrow">Podrucja</p>
-          <h2>Programi su podijeljeni po korisnickoj namjeri</h2>
-        </div>
-        <div class="ia-grid">
-          <article>
-            <h3>Obrazovanje</h3>
-            <ul>
-              <li>Srednja &#353;kola</li>
-              <li>Formalni programi</li>
-              <li>Neformalni programi</li>
-              <li>Verificirani programi</li>
-              <li>Osposobljavanja i usavrsavanja</li>
-            </ul>
-          </article>
-          <article id="kultura">
-            <h3>Radionice</h3>
-            <ul>
-              <li>Keramika</li>
-              <li>Nakit</li>
-              <li>Tkanje</li>
-              <li>Digitalna fotografija</li>
-            </ul>
-          </article>
-          <article id="nakladnistvo">
-            <h3>Kultura</h3>
-            <ul>
-              <li>Kulturne radionice</li>
-              <li>Manifestacije</li>
-              <li>Dogadanja</li>
-              <li>Sajmovi</li>
-            </ul>
-          </article>
-          <article>
-            <h3>Nakladnistvo</h3>
-            <ul>
-              <li>&#268;asopis 15 dana</li>
-              <li>Publikacije</li>
-              <li>Digitalni katalog</li>
-            </ul>
-          </article>
+        <h1>Programi su sada podijeljeni po novoj strukturi</h1>
+        <p>Obrazovne programe otvorite kroz stranicu Obrazovanje, a kulturne programe kroz izbornik Kultura.</p>
+        <div class="legacy-actions">
+          <a class="button primary" href="obrazovanje.html">Obrazovanje</a>
+          <a class="button secondary" href="kreativne-radionice.html">Kreativne radionice</a>
         </div>
       </section>
     </main>
-    <footer class="site-footer compact-footer">
-      <span>&copy; 2026 POUZ</span>
-      <a href="kontakt.html">Kontakt</a>
-    </footer>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <a class="footer-brand" href="index.html">
+        <span class="brand-logo footer-logo"><img src="assets/pou-logo.svg" alt="POUZ" /></span>
+      </a>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere hendrerit neque.</p>
+    </div>
+    <div>
+      <h2>Kontakt</h2>
+      <address>
+        Ulica grada Vukovara 68<br />
+        10000 Zagreb<br />
+        Hrvatska
+      </address>
+      <p><a href="kontakt.html">Po&#353;alji upit</a></p>
+    </div>
+    <div>
+      <h2>Brzi linkovi</h2>
+      <ul>
+        <li><a href="obrazovanje.html">Obrazovanje</a></li>
+        <li><a href="vijesti.html">Vijesti</a></li>
+        <li><a href="dokumenti.html">Dokumenti</a></li>
+        <li><a href="webshop.html">Webshop</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 POUZ</span>
+    <a href="dokumenti.html">Dokumenti i politika privatnosti</a>
+  </div>
+</footer>
+    <script src="assets/site-data.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
-
-
-

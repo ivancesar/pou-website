@@ -122,9 +122,9 @@ textarea:focus {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   min-height: 82px;
-  padding: 0 44px;
+  padding: 0 18px;
   background: var(--color-tertiary);
   border-bottom: 1px solid var(--color-line);
 }
@@ -282,22 +282,38 @@ textarea:focus {
 .primary-nav > ul {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0;
   padding: 0;
   margin: 0;
   list-style: none;
+  border-left: 1px solid var(--color-line);
+}
+
+.primary-nav > ul > li {
+  border-right: 1px solid var(--color-line);
 }
 
 .nav-link {
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 12px;
+  min-height: 50px;
+  padding: 0 13px;
   color: var(--color-ink);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.98rem;
+  font-weight: 700;
   white-space: nowrap;
   transition: color var(--motion-fast) ease, background-color var(--motion-fast) ease,
     transform var(--motion-fast) var(--motion-ease);
+}
+
+.nav-parent::after {
+  margin-left: 6px;
+  content: "\25BE";
+  font-size: 0.72rem;
 }
 
 .nav-link::after {
@@ -359,8 +375,8 @@ textarea:focus {
 }
 
 .submenu-wide {
-  grid-template-columns: repeat(2, minmax(210px, 1fr));
-  min-width: 500px;
+  grid-template-columns: 1fr;
+  min-width: 270px;
 }
 
 .has-submenu:nth-last-child(-n + 2) .submenu {
@@ -378,12 +394,17 @@ textarea:focus {
 .submenu a {
   display: flex;
   align-items: center;
-  min-height: 40px;
-  padding: 0 12px;
+  min-height: 42px;
+  padding: 0 14px;
   color: var(--color-ink);
-  white-space: nowrap;
+  border-top: 1px solid var(--color-line);
+  white-space: normal;
   transition: color var(--motion-fast) ease, background-color var(--motion-fast) ease,
     transform var(--motion-fast) var(--motion-ease);
+}
+
+.submenu li:first-child a {
+  border-top: 0;
 }
 
 .submenu a:hover,
@@ -1829,29 +1850,26 @@ details[open] summary {
 
 @media (max-width: 1140px) {
   .site-header {
-    grid-template-columns: auto auto;
-    justify-content: space-between;
-    padding: 0 22px;
-  }
-
-  .menu-toggle {
-    display: block;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    justify-content: stretch;
+    gap: 12px 18px;
+    min-height: auto;
+    padding: 12px 22px;
   }
 
   .primary-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    position: static;
+    grid-column: 1 / -1;
     justify-self: stretch;
     width: 100%;
-    display: none;
-    max-height: calc(100vh - 82px);
-    overflow: auto;
-    padding: 16px 22px 22px;
+    display: block;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
     background: var(--color-tertiary);
-    border-bottom: 1px solid var(--color-line);
-    box-shadow: var(--shadow);
+    border-bottom: 0;
+    box-shadow: none;
   }
 
   .header-actions {
@@ -1859,35 +1877,45 @@ details[open] summary {
     grid-row: 1;
   }
 
-  .site-header.nav-open .primary-nav {
-    display: block;
+  .primary-nav > ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0;
+    border-left: 1px solid var(--color-line);
   }
 
-  .primary-nav > ul {
-    display: grid;
-    align-items: stretch;
-    gap: 6px;
+  .primary-nav > ul > li {
+    border-right: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .nav-link {
-    width: 100%;
+    width: auto;
     justify-content: space-between;
     padding: 0 12px;
   }
 
   .submenu,
   .submenu-wide {
-    position: static;
-    display: grid;
-    min-width: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    min-width: 240px;
     grid-template-columns: 1fr;
-    padding: 0 0 8px 16px;
-    margin: -2px 0 8px;
-    border: 0;
-    box-shadow: none;
+    padding: 10px;
+    margin: 0;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow);
     opacity: 1;
     pointer-events: auto;
     transform: none;
+  }
+
+  .has-submenu:hover .submenu,
+  .has-submenu:focus-within .submenu {
+    display: grid;
   }
 
   .submenu a {
